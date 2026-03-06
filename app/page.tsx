@@ -1,65 +1,142 @@
-import Image from "next/image";
+import Link from "next/link";
+import { categories, getRecettesVedettes } from "@/data/recettes";
+import CategoryCard from "@/components/CategoryCard";
+import RecipeCard from "@/components/RecipeCard";
 
 export default function Home() {
+  const vedettes = getRecettesVedettes();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      {/* Hero */}
+      <section className="relative bg-text text-bg overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 text-8xl">🏯</div>
+          <div className="absolute top-20 right-20 text-6xl">🌸</div>
+          <div className="absolute bottom-10 left-1/3 text-7xl">🎋</div>
+          <div className="absolute bottom-20 right-10 text-5xl">⛩️</div>
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-36 relative z-10 text-center">
+          <p className="text-warm-light tracking-[0.3em] uppercase text-sm mb-6">
+            和食の美 — L&apos;art culinaire japonais
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <h1
+            className="text-5xl sm:text-7xl font-bold mb-6 tracking-tight"
+            style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Imrane Cook
+          </h1>
+          <p className="text-lg sm:text-xl text-bg-surface max-w-2xl mx-auto mb-10 leading-relaxed">
+            Explorez les saveurs authentiques du Japon. Des recettes
+            traditionnelles préparées avec passion, du sushi délicat au ramen
+            réconfortant.
+          </p>
+          <Link
+            href="/recettes"
+            className="inline-block bg-accent hover:bg-accent-hover text-white px-8 py-4 rounded-full text-sm uppercase tracking-widest transition-colors duration-300"
           >
-            Documentation
-          </a>
+            Découvrir nos recettes
+          </Link>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Categories */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+        <div className="text-center mb-12">
+          <h2
+            className="text-3xl sm:text-4xl font-bold mb-3"
+            style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
+          >
+            Nos Catégories
+          </h2>
+          <p className="jp-divider text-warm text-sm">料理のカテゴリー</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {categories.map((cat) => (
+            <CategoryCard key={cat.id} {...cat} />
+          ))}
+        </div>
+      </section>
+
+      {/* Featured recipes */}
+      <section className="bg-bg-surface py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <h2
+              className="text-3xl sm:text-4xl font-bold mb-3"
+              style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
+            >
+              À la Une
+            </h2>
+            <p className="jp-divider text-warm text-sm">おすすめレシピ</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {vedettes.map((recette) => (
+              <RecipeCard key={recette.slug} recette={recette} />
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link
+              href="/recettes"
+              className="inline-block border-2 border-accent text-accent hover:bg-accent hover:text-white px-8 py-3 rounded-full text-sm uppercase tracking-widest transition-all duration-300"
+            >
+              Toutes les recettes
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
+        <h2
+          className="text-3xl sm:text-4xl font-bold mb-3"
+          style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
+        >
+          Notre Philosophie
+        </h2>
+        <p className="jp-divider text-warm text-sm mb-10">食の哲学</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="p-6">
+            <span className="text-4xl block mb-4">🍃</span>
+            <h3
+              className="font-bold text-lg mb-2"
+              style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
+            >
+              Saisonnalité
+            </h3>
+            <p className="text-sm text-text-muted leading-relaxed">
+              Chaque saison apporte ses ingrédients. Nous respectons le cycle
+              naturel pour des plats au sommet de leur saveur.
+            </p>
+          </div>
+          <div className="p-6">
+            <span className="text-4xl block mb-4">✨</span>
+            <h3
+              className="font-bold text-lg mb-2"
+              style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
+            >
+              Umami
+            </h3>
+            <p className="text-sm text-text-muted leading-relaxed">
+              La cinquième saveur, au cœur de la cuisine japonaise. Le dashi, le
+              miso et la sauce soja en sont les piliers.
+            </p>
+          </div>
+          <div className="p-6">
+            <span className="text-4xl block mb-4">🎨</span>
+            <h3
+              className="font-bold text-lg mb-2"
+              style={{ fontFamily: "var(--font-noto-serif-jp), serif" }}
+            >
+              Présentation
+            </h3>
+            <p className="text-sm text-text-muted leading-relaxed">
+              On mange d&apos;abord avec les yeux. L&apos;art du dressage est aussi
+              important que le goût dans la tradition japonaise.
+            </p>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
