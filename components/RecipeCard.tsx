@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Recette } from "@/data/recettes";
 
@@ -5,9 +6,15 @@ export default function RecipeCard({ recette }: { recette: Recette }) {
   return (
     <Link href={`/recettes/${recette.slug}`} className="group block">
       <div className="bg-bg-white rounded-2xl overflow-hidden border border-border hover:border-accent/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-        {/* Image placeholder */}
-        <div className="h-48 bg-bg-surface flex items-center justify-center text-6xl group-hover:scale-105 transition-transform duration-300">
-          {recette.image}
+        {/* Image */}
+        <div className="h-48 relative overflow-hidden bg-bg-surface">
+          <Image
+            src={recette.image}
+            alt={recette.titre}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
 
         <div className="p-5">

@@ -1,4 +1,5 @@
 import { recettes, getRecetteBySlug } from "@/data/recettes";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -46,7 +47,16 @@ export default async function RecetteDetailPage({
 
       {/* Header */}
       <div className="text-center mb-12">
-        <span className="text-8xl block mb-6">{recette.image}</span>
+        <div className="relative w-full h-64 sm:h-80 rounded-2xl overflow-hidden mb-6">
+          <Image
+            src={recette.image}
+            alt={recette.titre}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 800px"
+            priority
+          />
+        </div>
         <span className="inline-block text-xs uppercase tracking-widest text-accent font-medium mb-3">
           {recette.categorie}
         </span>
