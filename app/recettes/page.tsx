@@ -57,7 +57,7 @@ function RecettesContent() {
                 : "bg-bg-white border border-border text-text-muted hover:border-accent/30"
             }`}
           >
-            {cat.emoji} {cat.nom}
+            {cat.nom}
           </button>
         ))}
       </div>
